@@ -1,0 +1,21 @@
+<section class="w-[55rem]">
+  <h2 class="text-2xl font-semibold mb-6">Conditional View</h2>
+  <form hx-post="/conditional" hx-target="#user-info" class="flex items-end gap-6 mb-6">
+      <div class="flex flex-col gap-1">
+        <label for="name-input" class="text-sm font-semibold">Name</label>
+        <input required type="text" name="name" id="name-input" class="border border-slate-700 invalid:border-red-300 rounded h-12 px-4 w-25">
+      </div>
+
+      <div class="flex flex-col gap-1">
+        <label for="user-type" class="text-sm font-semibold">User Type</label>
+        <select required name="type" id="user-type" class="border border-slate-700 invalid:border-red-300 rounded px-4 h-12">
+          <option value="owner">Owner</option>
+          <option value="student">Student</option>
+        </select>
+    </div>
+    <button type="submit" class="h-12 px-6 border rounded border-blue-500 text-slate-50 bg-blue-500 hover:bg-blue-300 active:bg-blue-700">Submit</button>
+  </form>
+  <div id="user-info" hx-swap="innerHTML">
+    <p>Please provide user info.</p>
+  </div>
+</section>
