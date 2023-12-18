@@ -16,6 +16,7 @@ type ContactPageData = {
   title: string;
   contacts: Contact[];
 };
+const APP_TITLE = "Demo";
 
 @Controller()
 export class AppController {
@@ -27,7 +28,7 @@ export class AppController {
   @Get()
   @Render('index')
   root(): unknown {
-    return { title: 'Demo' };
+    return { title: APP_TITLE };
   }
 
   /**
@@ -64,13 +65,21 @@ export class AppController {
    * not just the partial the nested route loads
    * */
   @Get('/route1')
-  route_one(@Req() req: Request, @Res() res) {
+  route_one(@Req() req: Request, @Res() res: Response) {
     const isNotAJAX = !req.headers['hx-request'];
 
+    let requestOptions: { message: string, showRoute?: boolean, title?: string } = {
+      message: 'hello route 1',
+    };
+
     // index contains the entire view. route_1 is a partial of the nested content.
-    const templateName = isNotAJAX ? 'index' : 'route_1';
+    let templateName = 'route_1';
+    if (isNotAJAX) {
+      templateName = 'index';
+      requestOptions = { ...requestOptions, title: APP_TITLE, showRoute: true }
+    }
     // Index has conditional that will show the route_1 content if showRoute is true.
-    return res.render(templateName, { message: 'hello route 1', showRoute: isNotAJAX });
+    return res.render(templateName, requestOptions);
   }
 
   // TODO: add refresh fallback
