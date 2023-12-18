@@ -1,19 +1,22 @@
 {{#> layout}}
   <section class="py-8">
-    <h2 class="text-2xl font-semibold mb-6">Contacts</h2>
+    <h2 class="text-2xl font-semibold mb-6">Lazy loaded</h2>
     <div hx-get="/contact" hx-trigger="load" hx-swap="inner" class="px-4"></div>
   </section>
   {{> conditionalView}}
 
-  <nav>
-    <ul hx-boost="true">
-      <li><a href="/route1" hx-target="#outlet">Route 1</a></li>
-      <li><a href="/route2" hx-target="#outlet">Route 2</a></li>
+  <section class="py-8 flex flex-col">
+    <h2 class="text-2xl font-semibold mb-8">Nested Routing</h2>
+  <nav class="mb-4">
+    <ul hx-boost="true" class="flex">
+      <li class="shrink-0 w-24"><a href="/route1" hx-target="#outlet" class="text-blue-500 hover:underline">Route 1</a></li>
+      <li class="shrink-0 w-25"><a href="/route2" hx-target="#outlet" class="text-blue-500 hover:underline">Route 2</a></li>
     </ul>
   </nav>
-  <div id="outlet" hx-swap="innerHTML">
+  <div id="outlet" hx-swap="innerHTML" class="outline outline-stone-300 rounded p-8">
       {{# if showRoute}}
         {{> route_1_content }}
       {{/if}}
   </div>
+  </section>
 {{/layout}}
