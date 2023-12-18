@@ -16,7 +16,49 @@ type ContactPageData = {
   title: string;
   contacts: Contact[];
 };
-const APP_TITLE = "Demo";
+
+type RoutedOptions = {
+  message: string;
+  showRoute?: boolean;
+  title?: string;
+  routePartial?: string;
+};
+
+type RouteInfo = {
+  req: Request;
+  message: string;
+  routeTemplate: string;
+  partialTemplate: string;
+  parentTemplate: string;
+};
+const APP_TITLE = 'Demo';
+
+const getRouteTemplateAndOptions = ({
+  req,
+  message,
+  routeTemplate,
+  partialTemplate,
+  parentTemplate,
+}: RouteInfo): [string, RoutedOptions] => {
+  const isNotAJAX = !req.headers['hx-request'];
+
+  let requestOptions: RoutedOptions = {
+    message,
+  };
+
+  // index contains the entire view. route_1 is a partial of the nested content.
+  let templateName = routeTemplate;
+  if (isNotAJAX) {
+    templateName = parentTemplate;
+    requestOptions = {
+      ...requestOptions,
+      title: APP_TITLE,
+      showRoute: true,
+      routePartial: partialTemplate,
+    };
+  }
+  return [templateName, requestOptions];
+};
 
 @Controller()
 export class AppController {
@@ -54,7 +96,7 @@ export class AppController {
     @Body() { name, type }: ConditionalRequestBody,
     @Res() res: Response,
   ) {
-    return res.render(type, { name });
+    res.render(type, { name });
   }
 
   // --- nested routes ----
@@ -66,26 +108,26 @@ export class AppController {
    * */
   @Get('/route1')
   route_one(@Req() req: Request, @Res() res: Response) {
-    const isNotAJAX = !req.headers['hx-request'];
-
-    let requestOptions: { message: string, showRoute?: boolean, title?: string } = {
-      message: 'hello route 1',
+    const routeInfo: RouteInfo = {
+      req,
+      message: 'Hello, route 1',
+      routeTemplate: 'route_1',
+      partialTemplate: 'route_1_content',
+      parentTemplate: 'index',
     };
-
-    // index contains the entire view. route_1 is a partial of the nested content.
-    let templateName = 'route_1';
-    if (isNotAJAX) {
-      templateName = 'index';
-      requestOptions = { ...requestOptions, title: APP_TITLE, showRoute: true }
-    }
-    // Index has conditional that will show the route_1 content if showRoute is true.
-    return res.render(templateName, requestOptions);
+    res.render(...getRouteTemplateAndOptions(routeInfo));
   }
 
   // TODO: add refresh fallback
   @Get('/route2')
-  @Render('route_2')
-  route_two(): { message: string } {
-    return { message: 'hello route 2' };
+  route_two(@Req() req: Request, @Res() res: Response) {
+    const routeInfo: RouteInfo = {
+      req,
+      message: 'Hello, route 2',
+      routeTemplate: 'route_2',
+      partialTemplate: 'route_2_content',
+      parentTemplate: 'index',
+    };
+    res.render(...getRouteTemplateAndOptions(routeInfo));
   }
 }
