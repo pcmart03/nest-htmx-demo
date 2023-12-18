@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Render, Res } from '@nestjs/common';
+import { Body, Controller, Get, Post, Render, Req, Res } from '@nestjs/common';
 import { Response } from 'express';
 import { AppService } from './app.service';
 
@@ -16,6 +16,7 @@ type ContactPageData = {
   title: string;
   contacts: Contact[];
 };
+
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService) {}
@@ -55,8 +56,17 @@ export class AppController {
     return res.render(type, { name });
   }
 
-  @Get('/api')
-  apiResponse(): { message: string } {
-    return { message: 'hello world' };
+  @Get('/route1')
+  route_one(@Req() req: Request, @Res() res) {
+    console.log(req.headers);
+    const showRoute = !req.headers['hx-request'];
+    const templateName = showRoute ? 'index' : 'route_1';
+    return res.render(templateName, { message: 'hello route 1', showRoute });
+  }
+
+  @Get('/route2')
+  @Render('route_2')
+  route_two(): { message: string } {
+    return { message: 'hello route 2' };
   }
 }

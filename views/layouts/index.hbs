@@ -4,4 +4,16 @@
     <div hx-get="/contact" hx-trigger="load" hx-swap="inner" class="px-4"></div>
   </section>
   {{> conditionalView}}
+
+  <nav>
+    <ul hx-boost="true">
+      <li><a href="/route1" hx-target="#outlet">Route 1</a></li>
+      <li><a href="/route2" hx-target="#outlet">Route 2</a></li>
+    </ul>
+  </nav>
+  <div id="outlet" hx-swap="innerHTML">
+      {{# if showRoute}}
+        {{> route_1_content }}
+      {{/if}}
+  </div>
 {{/layout}}
