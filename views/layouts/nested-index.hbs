@@ -1,0 +1,18 @@
+{{#> layout}}
+
+  <section class="py-8 flex flex-col">
+    <h2 class="text-2xl font-semibold mb-8">Nested Routing</h2>
+    <nav class="mb-4">
+      <!--hx-boost converts anchors to Ajax calls and updates the browser history. If javascript is turned off they fall back to anchors. -->
+      <ul hx-boost="true" class="flex">
+        <li class="shrink-0 w-24"><a href="/nested/route1" hx-target="#outlet" class="text-blue-500 hover:underline">Route 1</a></li>
+        <li class="shrink-0 w-25"><a href="/nested/route2" hx-target="#outlet" class="text-blue-500 hover:underline">Route 2</a></li>
+      </ul>
+    </nav>
+    <div id="outlet" hx-swap="innerHTML" class="outline outline-stone-300 rounded p-8">
+      {{# if showRoute}}
+        {{> (lookup . 'routePartial') }}
+      {{/if}}
+    </div>
+  </section>
+{{/layout}}

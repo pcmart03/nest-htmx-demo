@@ -1,0 +1,11 @@
+<dl>
+  {{#each students}}
+    {{#with this}}
+      <dt class='font-semibold'>{{name}}</dt>
+      <dd class='mb-4'><a
+          href='mailto:{{email}}'
+          class='text-blue-600 hover:text-blue-400'
+        >{{email}}</a></dd>
+    {{/with}}
+  {{/each}}
+</dl>
