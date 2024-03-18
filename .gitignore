@@ -1,6 +1,8 @@
 # compiled output
 /dist
 /node_modules
+/db
+public/styles.css
 
 # Logs
 logs
