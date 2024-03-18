@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Post, Render, Res } from '@nestjs/common';
 import { Response } from 'express';
-import { Student, StudentsTemplateData } from '../../types/student.types';
+import { StudentsTemplateData } from '../../types/student.types';
 import { appConfig } from '@src/app.config';
 import { StudentsService } from '@src/conditional/data-access/students/students.service';
 import { ConditionalRequestBody } from '@src/conditional/types/conditional.type';

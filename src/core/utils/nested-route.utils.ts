@@ -1,5 +1,5 @@
 import { RoutedOptions, RouteInfo } from '../types/route.types';
-import { appConfig } from '../../app.config';
+import { appConfig } from '@src/app.config';
 
 export const getRouteTemplateAndOptions = ({
   req,
