@@ -14,4 +14,8 @@ export class AppController {
   root(): unknown {
     return { title: appConfig.title };
   }
+
+  @Get('/lazy')
+  @Render('toc')
+  lazy() {}
 }

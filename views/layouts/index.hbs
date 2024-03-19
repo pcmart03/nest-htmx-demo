@@ -1,3 +1,10 @@
 {{#> layout}}
-  <h1 class="text-3xl mt-4">HTMX Demo</h1>
+  <h1 class="text-3xl my-4">HTMX Demo</h1>
+  <section
+    hx-get="/lazy"
+    hx-trigger="load"
+    hx-swap="outerHTML"
+    hx-indicator="#indicator"
+  ></section>
+  <p id="indicator" class="htmx-indicator">loading...</p>
 {{/layout}}
